@@ -1,11 +1,11 @@
 const wishService = require("../services/wishServices");
 
-const wishCreateController = (req, res) => {
-  const { nickName, comment } = req.body;
+const wishCreateController = async (req, res) => {
+  const { uuid, nickName, comment } = req.body;
 
-  wishService.wishCreateService(nickName, comment);
+  const wishData = await wishService.wishCreateService(uuid, nickName, comment);
 
-  res.status(201).json({ message: "create success" });
+  res.status(201).json({ message: "create success", wishData });
 };
 
 module.exports = { wishCreateController };

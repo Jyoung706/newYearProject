@@ -1,9 +1,13 @@
 const mongoose = require("mongoose");
-
 const { Schema } = mongoose;
+const { getCurrentDate } = require("../common/date");
 
 const wishSchema = new Schema(
   {
+    uuid: {
+      type: String,
+      required: true,
+    },
     nickName: {
       type: String,
       required: true,
@@ -14,7 +18,7 @@ const wishSchema = new Schema(
     },
     createdAt: {
       type: Date,
-      default: Date.now,
+      default: getCurrentDate(),
     },
   },
   { versionKey: false }
