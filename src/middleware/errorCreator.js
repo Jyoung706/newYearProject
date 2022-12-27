@@ -5,8 +5,18 @@ class ValidationError extends Error {
 
     Error.captureStackTrace(this, this.constructor);
 
-    this.statusCode = 400 || 500;
+    this.statusCode = 409 || 500;
   }
 }
 
-module.exports = { ValidationError };
+class BadRequestError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "BadRequestError";
+
+    Error.captureStackTrace(this, this.constructor);
+
+    this.statusCode = 400 || 500;
+  }
+}
+module.exports = { ValidationError, BadRequestError };
