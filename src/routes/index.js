@@ -3,7 +3,7 @@ const asyncWrap = require("../middleware/asyncWrap");
 const wishController = require("../controllers/wishController");
 const idController = require("../controllers/idController");
 const likeController = require("../controllers/likeController");
-const keywordController = require("../controller/keywordController");
+const keywordController = require("../controllers/keywordController");
 
 const router = express.Router();
 
