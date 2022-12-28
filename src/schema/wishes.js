@@ -16,6 +16,14 @@ const wishSchema = new Schema(
       type: String,
       required: true,
     },
+    likes: {
+      type: Number,
+      default: 0,
+    },
+    likeUser: {
+      type: Array,
+      defalut: [],
+    },
     createdAt: {
       type: Date,
       default: getCurrentDate(),
