@@ -1,6 +1,6 @@
 const request = require("request");
 require("dotenv").config();
-const wishModel = require("../model/wishModel");
+const wishDao = require("../models/wishDao");
 const { getCurrentTime, getPreviousTime } = require("../common/date");
 
 const keywordAnalyze = async () => {
@@ -9,7 +9,7 @@ const keywordAnalyze = async () => {
   let pre_time = "2022-12-26T18:00:00.000Z";
   let curr_time = "2022-12-26T19:00:00.000Z";
 
-  const count = await wishModel.findWishListByTimeCount(pre_time, curr_time);
+  const count = await wishDao.findWishListByTimeCount(pre_time, curr_time);
   let wishDiv = Math.ceil(count / 50);
 
   let limit = 50;
@@ -17,7 +17,7 @@ const keywordAnalyze = async () => {
   for (let i = 1, pending = Promise.resolve(); i <= wishDiv; i++) {
     let text = "";
 
-    let wishList = await wishModel.findWishListByTime(
+    let wishList = await wishDao.findWishListByTime(
       pre_time,
       curr_time,
       i * limit - limit,

@@ -14,4 +14,32 @@ const createWish = async (uuid, nickName, comment) => {
   return wishData;
 };
 
-module.exports = { createWish, findWishByUuid };
+const findWishListByTimeCount = async (pre_time, curr_time) => {
+  return await Wish.find({
+    createdAt: {
+      $gte: pre_time,
+      $lte: curr_time,
+    },
+  }).count();
+};
+
+const findWishListByTime = async (pre_time, curr_time, sikp, limit) => {
+  return await Wish.find(
+    {
+      createdAt: {
+        $gte: pre_time,
+        $lte: curr_time,
+      },
+    },
+    { _id: 0, comment: 1 }
+  )
+    .skip(sikp)
+    .limit(limit);
+};
+
+module.exports = {
+  createWish,
+  findWishByUuid,
+  findWishListByTimeCount,
+  findWishListByTime,
+};
