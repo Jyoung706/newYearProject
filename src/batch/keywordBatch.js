@@ -1,9 +1,9 @@
 const cron = require("node-cron");
+const keywordService = require("../services/keywordService");
 
-// 초 분 시 날짜 월 요일
 const batchKeywordAnalyze = () => {
-  cron.schedule("0-59 * * * * *", function () {
-    console.log("node-cron 실행됨 test");
+  cron.schedule("0 */1 * * *", async function () {
+    await keywordService.keywordAnalyze();
   });
 };
 

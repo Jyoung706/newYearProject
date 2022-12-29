@@ -4,7 +4,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const cron = require("./batch/keywordBatch");
 
-// cron.batchKeywordAnalyze();
+cron.batchKeywordAnalyze();
 
 const createApp = () => {
   const app = express();

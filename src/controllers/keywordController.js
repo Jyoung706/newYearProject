@@ -1,9 +1,8 @@
-const request = require("request");
 const keywordService = require("../services/keywordService");
-require("dotenv").config();
 
-const keywordAnalyze = async (req, res) => {
-  await keywordService.keywordAnalyze();
+const findUsuallyKeyword = async (req, res) => {
+  const keywords = await keywordService.findUsuallyKeyword();
+  res.status(200).json(keywords);
 };
 
-module.exports = { keywordAnalyze };
+module.exports = { findUsuallyKeyword };
