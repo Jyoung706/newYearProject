@@ -77,4 +77,8 @@ const callMorphemeAPI = (text) => {
   });
 };
 
-module.exports = { keywordAnalyze };
+const findUsuallyKeyword = async () => {
+  return await keyWordDao.findUsuallyKeyword();
+};
+
+module.exports = { keywordAnalyze, findUsuallyKeyword };

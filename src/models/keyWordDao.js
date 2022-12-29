@@ -8,4 +8,8 @@ const upsertKeyWord = async (keyword, frequency) => {
   );
 };
 
-module.exports = { upsertKeyWord };
+const findUsuallyKeyword = async () => {
+  return await keyWordSchema.find({}).sort({ frequency: -1 }).limit(10);
+};
+
+module.exports = { upsertKeyWord, findUsuallyKeyword };
