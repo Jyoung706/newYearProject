@@ -37,4 +37,8 @@ const wishCreateService = async (uuid, nickName, comment) => {
   return wishDao.createWish(uuid, nickName, comment);
 };
 
-module.exports = { wishCreateService };
+const wishForMainService = () => {
+  return wishDao.getWishForMain();
+};
+
+module.exports = { wishCreateService, wishForMainService };

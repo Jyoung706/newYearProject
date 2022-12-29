@@ -29,4 +29,7 @@ const likeService = async (likeData) => {
   }
 };
 
-module.exports = { likeService };
+const myLikeService = (uuid, page) => {
+  return likeDao.getMyLikeWish(uuid, page);
+};
+module.exports = { likeService, myLikeService };
