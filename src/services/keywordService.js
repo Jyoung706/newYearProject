@@ -1,13 +1,12 @@
 const request = require("request");
 require("dotenv").config();
 const wishDao = require("../models/wishDao");
+const keyWordDao = require("../models/keyWordDao");
 const { getCurrentTime, getPreviousTime } = require("../common/date");
 
 const keywordAnalyze = async () => {
-  //   let pre_time = getPreviousTime();
-  //   let curr_time = getCurrentTime();
-  let pre_time = "2022-12-26T18:00:00.000Z";
-  let curr_time = "2022-12-26T19:00:00.000Z";
+  let pre_time = getPreviousTime();
+  let curr_time = getCurrentTime();
 
   const count = await wishDao.findWishListByTimeCount(pre_time, curr_time);
   let wishDiv = Math.ceil(count / 50);
@@ -55,17 +54,31 @@ const callMorphemeAPI = (text) => {
     },
   };
 
-  request.post(options, function (error, response, body) {
-    let mropStr = "";
+  let map = new Map();
 
+  request.post(options, function (error, response, body) {
     let bodyJsonParse = JSON.parse(body);
     let morp = bodyJsonParse.return_object.sentence[0].morp;
+
     morp.forEach((e) => {
       if (e.type === "NNG" || e.type === "NNP" || e.type === "NNB") {
-        mropStr = mropStr + e.lemma;
+        if (map.get(e.lemma)) {
+          let num = map.get(e.lemma);
+          map.set(e.lemma, num + 1);
+        } else {
+          map.set(e.lemma, 1);
+        }
       }
+    });
+
+    map.forEach(async (v, k) => {
+      await keyWordDao.upsertKeyWord(k, v);
     });
   });
 };
 
-module.exports = { keywordAnalyze };
+const findUsuallyKeyword = async () => {
+  return await keyWordDao.findUsuallyKeyword();
+};
+
+module.exports = { keywordAnalyze, findUsuallyKeyword };
