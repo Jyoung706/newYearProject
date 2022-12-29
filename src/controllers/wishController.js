@@ -8,4 +8,9 @@ const wishCreateController = async (req, res) => {
   res.status(201).json({ message: "create success", wishData });
 };
 
-module.exports = { wishCreateController };
+const wishForMainController = async (req, res) => {
+  const wishData = await wishService.wishForMainService();
+  res.status(201).json(wishData);
+};
+
+module.exports = { wishCreateController, wishForMainController };

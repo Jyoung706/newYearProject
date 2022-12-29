@@ -11,5 +11,7 @@ router.post("/keyword", asyncWrap(keywordController.findUsuallyKeyword));
 router.get("/id", idController.idCreateController);
 router.post("/wishes", asyncWrap(wishController.wishCreateController));
 router.post("/like", asyncWrap(likeController.likeController));
+router.get("/main", wishController.wishForMainController);
+router.get("/like", likeController.myLikeController);
 
 module.exports = router;

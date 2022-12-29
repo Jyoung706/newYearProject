@@ -5,7 +5,15 @@ const likeController = async (req, res) => {
 
   await likeService.likeService(likeData);
 
-  res.status(400).json({ message: "request complete" });
+  res.status(200).json({ message: "request complete" });
 };
 
-module.exports = { likeController };
+const myLikeController = async (req, res) => {
+  const { uuid, page } = req.query;
+
+  const likeData = await likeService.myLikeService(uuid, page);
+
+  res.status(200).json(likeData);
+};
+
+module.exports = { likeController, myLikeController };
