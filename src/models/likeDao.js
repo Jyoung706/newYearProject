@@ -16,8 +16,8 @@ const validationLike = async (id, uuid) => {
   return await Wish.find({ $and: [{ _id: id }, { likeUser: uuid }] });
 };
 
-const getMyLikeWish = (uuid, page) => {
-  return Wish.aggregate([{ $match: { likeUser: uuid } }, { $skip: (page - 1) * 4 }, { $limit: 4 }]);
+const getMyLikeWish = (uuid, skip, limit) => {
+  return Wish.aggregate([{ $match: { likeUser: uuid } }, { $skip: skip }, { $limit: +limit }]);
 };
 
 module.exports = { createLike, removeLike, validationLike, getMyLikeWish };

@@ -29,7 +29,8 @@ const likeService = async (likeData) => {
   }
 };
 
-const myLikeService = (uuid, page) => {
-  return likeDao.getMyLikeWish(uuid, page);
+const myLikeService = (uuid, skip, limit) => {
+  skip = (skip - 1) * limit;
+  return likeDao.getMyLikeWish(uuid, skip, limit);
 };
 module.exports = { likeService, myLikeService };

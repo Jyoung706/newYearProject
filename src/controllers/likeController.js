@@ -9,9 +9,9 @@ const likeController = async (req, res) => {
 };
 
 const myLikeController = async (req, res) => {
-  const { uuid, page } = req.query;
+  const { uuid, skip, limit } = req.query;
 
-  const likeData = await likeService.myLikeService(uuid, page);
+  const likeData = await likeService.myLikeService(uuid, skip, limit);
 
   res.status(200).json(likeData);
 };
