@@ -21,4 +21,26 @@ const detailWishForMainController = async (req, res) => {
   res.status(200).json(wishData);
 };
 
-module.exports = { wishCreateController, wishForMainController, detailWishForMainController };
+const findWishByKeyword = async (req, res) => {
+  const { keyword, skip, limit } = req.query;
+
+  const wishes = await wishService.findWishByKeyword(keyword, skip, limit);
+
+  res.status(200).json(wishes);
+};
+
+const findMyWishList = async (req, res) => {
+  const { uuid, skip, limit } = req.query;
+
+  const wishes = await wishService.findMyWishList(uuid, skip, limit);
+
+  res.status(200).json(wishes);
+};
+
+module.exports = {
+  wishCreateController,
+  wishForMainController,
+  detailWishForMainController,
+  findWishByKeyword,
+  findMyWishList,
+};

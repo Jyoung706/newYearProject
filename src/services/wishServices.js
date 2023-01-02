@@ -1,5 +1,9 @@
 const wishDao = require("../models/wishDao");
-const { nickNameRegex, badWordRegex, commentLengthRegex } = require("../common/regex");
+const {
+  nickNameRegex,
+  badWordRegex,
+  commentLengthRegex,
+} = require("../common/regex");
 const { ValidationError } = require("../middleware/errorCreator");
 const { getCurrentDate } = require("../common/date");
 
@@ -8,8 +12,9 @@ const wishCreateService = async (uuid, nickName, comment) => {
 
   if (
     uuidCheck.length &&
-    uuidCheck[uuidCheck.length - 1].createdAt.toLocaleDateString("ko-KR", { timeZone: "UTC" }) ===
-      getCurrentDate().toLocaleDateString("ko-KR", { timeZone: "UTC" })
+    uuidCheck[uuidCheck.length - 1].createdAt.toLocaleDateString("ko-KR", {
+      timeZone: "UTC",
+    }) === getCurrentDate().toLocaleDateString("ko-KR", { timeZone: "UTC" })
   ) {
     throw new ValidationError("오늘 이미 소원을 작성한 유저입니다.");
   }
@@ -23,7 +28,9 @@ const wishCreateService = async (uuid, nickName, comment) => {
   const commentLenthTest = commentLengthFilter.test(comment);
 
   if (!regexTest) {
-    throw new ValidationError("특수문자 제외 한글 또는 영문 숫자를 포함한 8글자 이내여야 합니다.");
+    throw new ValidationError(
+      "특수문자 제외 한글 또는 영문 숫자를 포함한 8글자 이내여야 합니다."
+    );
   }
   if (nickNameBadWordTest) {
     throw new ValidationError("비속어는 사용 금지입니다.");
@@ -45,4 +52,22 @@ const detailWishForMainService = (id) => {
   return wishDao.findWishById(id);
 };
 
-module.exports = { wishCreateService, wishForMainService, detailWishForMainService };
+const findWishByKeyword = async (keyword, skip, limit) => {
+  const regex = (pattern) => new RegExp(`.*${pattern}.*`);
+  const keywordRegex = regex(keyword);
+  skip = (skip - 1) * limit;
+  return await wishDao.findWishByKeyword(keywordRegex, skip, limit);
+};
+
+const findMyWishList = async (uuid, skip, limit) => {
+  skip = (skip - 1) * limit;
+  return await wishDao.findMyWishList(uuid, skip, limit);
+};
+
+module.exports = {
+  wishCreateService,
+  wishForMainService,
+  detailWishForMainService,
+  findWishByKeyword,
+  findMyWishList,
+};

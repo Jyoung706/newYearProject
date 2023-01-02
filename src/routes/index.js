@@ -14,5 +14,7 @@ router.post("/like", asyncWrap(likeController.likeController));
 router.get("/main", wishController.wishForMainController);
 router.get("/like", likeController.myLikeController);
 router.get("/wishes", asyncWrap(wishController.detailWishForMainController));
+router.get("/search", asyncWrap(wishController.findWishByKeyword));
+router.get("/mywish", asyncWrap(wishController.findMyWishList));
 
 module.exports = router;
