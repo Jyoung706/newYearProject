@@ -7,7 +7,7 @@ const keywordController = require("../controllers/keywordController");
 
 const router = express.Router();
 
-router.post("/keyword", asyncWrap(keywordController.findUsuallyKeyword));
+router.get("/keyword", asyncWrap(keywordController.findUsuallyKeyword));
 router.get("/id", idController.idCreateController);
 router.post("/wishes", asyncWrap(wishController.wishCreateController));
 router.post("/like", asyncWrap(likeController.likeController));
