@@ -13,5 +13,6 @@ router.post("/wishes", asyncWrap(wishController.wishCreateController));
 router.post("/like", asyncWrap(likeController.likeController));
 router.get("/main", wishController.wishForMainController);
 router.get("/like", likeController.myLikeController);
+router.get("/wishes", asyncWrap(wishController.detailWishForMainController));
 
 module.exports = router;

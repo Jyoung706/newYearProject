@@ -41,4 +41,8 @@ const wishForMainService = () => {
   return wishDao.getWishForMain();
 };
 
-module.exports = { wishCreateService, wishForMainService };
+const detailWishForMainService = (id) => {
+  return wishDao.findWishById(id);
+};
+
+module.exports = { wishCreateService, wishForMainService, detailWishForMainService };

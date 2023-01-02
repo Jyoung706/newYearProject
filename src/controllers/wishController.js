@@ -10,7 +10,15 @@ const wishCreateController = async (req, res) => {
 
 const wishForMainController = async (req, res) => {
   const wishData = await wishService.wishForMainService();
-  res.status(201).json(wishData);
+  res.status(200).json(wishData);
 };
 
-module.exports = { wishCreateController, wishForMainController };
+const detailWishForMainController = async (req, res) => {
+  const { id } = req.query;
+
+  const wishData = await wishService.detailWishForMainService(id);
+
+  res.status(200).json(wishData);
+};
+
+module.exports = { wishCreateController, wishForMainController, detailWishForMainController };
