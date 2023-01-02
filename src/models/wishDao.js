@@ -1,3 +1,4 @@
+const { isObjectIdOrHexString } = require("mongoose");
 const Wish = require("../schema/wishes");
 
 const findWishByUuid = async (uuid) => {
@@ -41,10 +42,15 @@ const getWishForMain = async () => {
   return await Wish.aggregate([{ $sample: { size: 8 } }, { $project: { likes: 1 } }]);
 };
 
+const findWishById = async (id) => {
+  return await Wish.find({ _id: id });
+};
+
 module.exports = {
   createWish,
   findWishByUuid,
   findWishListByTimeCount,
   findWishListByTime,
   getWishForMain,
+  findWishById,
 };
