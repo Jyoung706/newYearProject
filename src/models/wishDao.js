@@ -38,10 +38,7 @@ const findWishListByTime = async (pre_time, curr_time, sikp, limit) => {
 };
 
 const getWishForMain = async () => {
-  return await Wish.aggregate([
-    { $sample: { size: 8 } },
-    { $project: { likes: 1 } },
-  ]);
+  return await Wish.aggregate([{ $sample: { size: 8 } }, { $project: { likes: 1 } }]);
 };
 
 const findWishById = async (id) => {

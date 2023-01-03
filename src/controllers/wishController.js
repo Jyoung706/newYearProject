@@ -14,9 +14,9 @@ const wishForMainController = async (req, res) => {
 };
 
 const detailWishForMainController = async (req, res) => {
-  const { id } = req.query;
+  const { uuid, id } = req.query;
 
-  const wishData = await wishService.detailWishForMainService(id);
+  const wishData = await wishService.detailWishForMainService(id, uuid);
 
   res.status(200).json(wishData);
 };

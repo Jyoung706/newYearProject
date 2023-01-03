@@ -28,6 +28,9 @@ const wishSchema = new Schema(
       type: Date,
       default: getCurrentDate(),
     },
+    isLike: {
+      type: Boolean,
+    },
   },
   { versionKey: false }
 );

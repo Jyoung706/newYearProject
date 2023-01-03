@@ -1,9 +1,5 @@
 const wishDao = require("../models/wishDao");
-const {
-  nickNameRegex,
-  badWordRegex,
-  commentLengthRegex,
-} = require("../common/regex");
+const { nickNameRegex, badWordRegex, commentLengthRegex } = require("../common/regex");
 const { ValidationError } = require("../middleware/errorCreator");
 const { getCurrentDate } = require("../common/date");
 
@@ -28,9 +24,7 @@ const wishCreateService = async (uuid, nickName, comment) => {
   const commentLenthTest = commentLengthFilter.test(comment);
 
   if (!regexTest) {
-    throw new ValidationError(
-      "특수문자 제외 한글 또는 영문 숫자를 포함한 8글자 이내여야 합니다."
-    );
+    throw new ValidationError("특수문자 제외 한글 또는 영문 숫자를 포함한 8글자 이내여야 합니다.");
   }
   if (nickNameBadWordTest) {
     throw new ValidationError("비속어는 사용 금지입니다.");
@@ -48,8 +42,14 @@ const wishForMainService = () => {
   return wishDao.getWishForMain();
 };
 
-const detailWishForMainService = (id) => {
-  return wishDao.findWishById(id);
+const detailWishForMainService = async (id, uuid) => {
+  const [wishData] = await wishDao.findWishById(id);
+  if (wishData.likeUser.includes(uuid)) {
+    wishData.isLike = true;
+  } else {
+    wishData.isLike = false;
+  }
+  return wishData;
 };
 
 const findWishByKeyword = async (keyword, skip, limit) => {
