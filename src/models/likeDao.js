@@ -20,4 +20,8 @@ const getMyLikeWish = (uuid, skip, limit) => {
   return Wish.aggregate([{ $match: { likeUser: uuid } }, { $skip: skip }, { $limit: +limit }]);
 };
 
-module.exports = { createLike, removeLike, validationLike, getMyLikeWish };
+const getLikeCount = (id) => {
+  return Wish.find({ _id: id }, { likes: 1 });
+};
+
+module.exports = { createLike, removeLike, validationLike, getMyLikeWish, getLikeCount };

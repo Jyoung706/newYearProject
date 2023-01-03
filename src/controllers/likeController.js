@@ -3,9 +3,9 @@ const likeService = require("../services/likeService");
 const likeController = async (req, res) => {
   const likeData = req.body;
 
-  await likeService.likeService(likeData);
+  const likeCount = await likeService.likeService(likeData);
 
-  res.status(200).json({ message: "request complete" });
+  res.status(200).json(likeCount);
 };
 
 const myLikeController = async (req, res) => {
