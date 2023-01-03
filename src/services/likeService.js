@@ -15,14 +15,18 @@ const likeService = async (likeData) => {
       throw new BadRequestError("이미 좋아요를 누른 유저입니다.");
     } else if (like === false) {
       likeDao.removeLike(likeData);
-      return;
+      const [likeCount] = await likeDao.getLikeCount(id);
+      likeCount.isLike = false;
+      return likeCount;
     }
   }
 
   if (!validateLike) {
     if (like === true) {
       likeDao.createLike(likeData);
-      return;
+      const [likeCount] = await likeDao.getLikeCount(id);
+      likeCount.isLike = true;
+      return likeCount;
     } else if (like === false) {
       throw new BadRequestError("좋아요를 누른 이력이 존재하지 않습니다.");
     }
