@@ -12,7 +12,7 @@ const wishCreateService = async (uuid, nickName, comment) => {
       timeZone: "UTC",
     }) === getCurrentDate().toLocaleDateString("ko-KR", { timeZone: "UTC" })
   ) {
-    throw new ValidationError("오늘 이미 소원을 작성한 유저입니다.");
+    throw new ValidationError("Already created");
   }
 
   const nickNameFilter = nickNameRegex;
