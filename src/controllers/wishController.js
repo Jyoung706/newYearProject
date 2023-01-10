@@ -37,10 +37,17 @@ const findMyWishList = async (req, res) => {
   res.status(200).json(wishes);
 };
 
+const wishCountController = async (req, res) => {
+  const wishCount = await wishService.wishCountService();
+
+  res.status(200).json({ wishes: wishCount });
+};
+
 module.exports = {
   wishCreateController,
   wishForMainController,
   detailWishForMainController,
   findWishByKeyword,
   findMyWishList,
+  wishCountController,
 };

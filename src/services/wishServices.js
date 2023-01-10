@@ -64,10 +64,15 @@ const findMyWishList = async (uuid, skip, limit) => {
   return await wishDao.findMyWishList(uuid, skip, limit);
 };
 
+const wishCountService = () => {
+  return wishDao.getAllWishCount();
+};
+
 module.exports = {
   wishCreateService,
   wishForMainService,
   detailWishForMainService,
   findWishByKeyword,
   findMyWishList,
+  wishCountService,
 };

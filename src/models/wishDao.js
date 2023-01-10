@@ -55,6 +55,9 @@ const findMyWishList = async (uuid, skip, limit) => {
   return await Wish.find({ uuid: uuid }).skip(skip).limit(limit);
 };
 
+const getAllWishCount = async () => {
+  return await Wish.count();
+};
 module.exports = {
   createWish,
   findWishByUuid,
@@ -64,4 +67,5 @@ module.exports = {
   findWishById,
   findWishByKeyword,
   findMyWishList,
+  getAllWishCount,
 };
