@@ -3,9 +3,8 @@ const { nickNameRegex, badWordRegex, commentLengthRegex } = require("../common/r
 const { ValidationError } = require("../middleware/errorCreator");
 const { getCurrentDate } = require("../common/date");
 
-const wishCreateService = async (uuid, nickName, comment) => {
+const wishDuplicationCheck = async (uuid) => {
   const uuidCheck = await wishDao.findWishByUuid(uuid);
-
   if (
     uuidCheck.length &&
     uuidCheck[uuidCheck.length - 1].createdAt.toLocaleDateString("ko-KR", {
@@ -14,7 +13,9 @@ const wishCreateService = async (uuid, nickName, comment) => {
   ) {
     throw new ValidationError("Already created");
   }
+};
 
+const wishCreateService = async (uuid, nickName, comment) => {
   const nickNameFilter = nickNameRegex;
   const regexTest = nickNameFilter.test(nickName);
   const badWordFilter = badWordRegex;
@@ -69,6 +70,7 @@ const wishCountService = () => {
 };
 
 module.exports = {
+  wishDuplicationCheck,
   wishCreateService,
   wishForMainService,
   detailWishForMainService,
