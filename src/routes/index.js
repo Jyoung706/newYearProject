@@ -17,5 +17,6 @@ router.get("/wishes", asyncWrap(wishController.detailWishForMainController));
 router.get("/search", asyncWrap(wishController.findWishByKeyword));
 router.get("/mywish", asyncWrap(wishController.findMyWishList));
 router.get("/wish-count", wishController.wishCountController);
+router.get("/wish-check", asyncWrap(wishController.wishDuplicationCheck));
 
 module.exports = router;

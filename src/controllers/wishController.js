@@ -1,5 +1,13 @@
 const wishService = require("../services/wishServices");
 
+const wishDuplicationCheck = async (req, res) => {
+  const { uuid } = req.query;
+
+  await wishService.wishDuplicationCheck(uuid);
+
+  res.status(200).json({ message: "Nothing Duplication" });
+};
+
 const wishCreateController = async (req, res) => {
   const { uuid, nickName, comment } = req.body;
 
@@ -44,6 +52,7 @@ const wishCountController = async (req, res) => {
 };
 
 module.exports = {
+  wishDuplicationCheck,
   wishCreateController,
   wishForMainController,
   detailWishForMainController,
