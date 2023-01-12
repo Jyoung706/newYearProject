@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const { getCurrentDate } = require("../common/date");
 
 const wishSchema = new Schema(
   {
@@ -24,15 +23,11 @@ const wishSchema = new Schema(
       type: Array,
       defalut: [],
     },
-    createdAt: {
-      type: Date,
-      default: getCurrentDate(),
-    },
     isLike: {
       type: Boolean,
     },
   },
-  { versionKey: false }
+  { timestamps: { createdAt: true, updatedAt: false }, versionKey: false }
 );
 
 module.exports = mongoose.model("Wish", wishSchema);
