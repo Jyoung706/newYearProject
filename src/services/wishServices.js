@@ -5,6 +5,7 @@ const { getCurrentDate } = require("../common/date");
 
 const wishDuplicationCheck = async (uuid) => {
   const uuidCheck = await wishDao.findWishByUuid(uuid);
+  if (!uuidCheck.length) return;
   const latestWishTime = uuidCheck[uuidCheck.length - 1].createdAt.toLocaleDateString("ko-KR", {
     timeZone: "UTC",
   });
