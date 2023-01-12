@@ -15,6 +15,10 @@ const wishSchema = new Schema(
       type: String,
       required: true,
     },
+    createdAt: {
+      type: Date,
+      required: true,
+    },
     likes: {
       type: Number,
       default: 0,
@@ -27,7 +31,7 @@ const wishSchema = new Schema(
       type: Boolean,
     },
   },
-  { timestamps: { createdAt: true, updatedAt: false }, versionKey: false }
+  { versionKey: false }
 );
 
 module.exports = mongoose.model("Wish", wishSchema);

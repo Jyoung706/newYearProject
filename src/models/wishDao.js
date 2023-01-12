@@ -1,3 +1,4 @@
+const { getCurrentDate } = require("../common/date");
 const Wish = require("../schema/wishes");
 
 const findWishByUuid = async (uuid) => {
@@ -9,6 +10,7 @@ const createWish = async (uuid, nickName, comment) => {
     uuid,
     nickName,
     comment,
+    createdAt: getCurrentDate(),
   });
   const wishData = await wish.save();
   return wishData;
