@@ -1,15 +1,26 @@
 const wishDao = require("../models/wishDao");
-const { nickNameRegex, badWordRegex, commentLengthRegex } = require("../common/regex");
-const { ValidationError } = require("../middleware/errorCreator");
+const {
+  nickNameRegex,
+  badWordRegex,
+  commentLengthRegex,
+} = require("../common/regex");
+const {
+  ValidationError,
+  BadRequestError,
+} = require("../middleware/errorCreator");
 const { getCurrentDate } = require("../common/date");
 
 const wishDuplicationCheck = async (uuid) => {
   const uuidCheck = await wishDao.findWishByUuid(uuid);
   if (!uuidCheck.length) return;
-  const latestWishTime = uuidCheck[uuidCheck.length - 1].createdAt.toLocaleDateString("ko-KR", {
+  const latestWishTime = uuidCheck[
+    uuidCheck.length - 1
+  ].createdAt.toLocaleDateString("ko-KR", {
     timeZone: "UTC",
   });
-  const currentTime = getCurrentDate().toLocaleDateString("ko-KR", { timeZone: "UTC" });
+  const currentTime = getCurrentDate().toLocaleDateString("ko-KR", {
+    timeZone: "UTC",
+  });
 
   if (uuidCheck.length && latestWishTime === currentTime) {
     throw new ValidationError("Already created");
@@ -26,7 +37,9 @@ const wishCreateService = async (uuid, nickName, comment) => {
   const commentLenthTest = commentLengthFilter.test(comment);
 
   if (!regexTest) {
-    throw new ValidationError("특수문자 제외 한글 또는 영문 숫자를 포함한 8글자 이내여야 합니다.");
+    throw new ValidationError(
+      "특수문자 제외 한글 또는 영문 숫자를 포함한 8글자 이내여야 합니다."
+    );
   }
   if (nickNameBadWordTest) {
     throw new ValidationError("비속어는 사용 금지입니다.");
@@ -54,16 +67,37 @@ const detailWishForMainService = async (id, uuid) => {
   return wishData;
 };
 
-const findWishByKeyword = async (keyword, skip, limit) => {
+const findWishByKeyword = async (keyword, skip, limit, uuid) => {
+  if (keyword.length == 0) {
+    throw new BadRequestError("키워드에는 null 값이 들어갈 수 없습니다.");
+  }
+
   const regex = (pattern) => new RegExp(`.*${pattern}.*`);
   const keywordRegex = regex(keyword);
   skip = (skip - 1) * limit;
-  return await wishDao.findWishByKeyword(keywordRegex, skip, limit);
+
+  const [searchWishes] = await wishDao.findWishByKeyword(
+    keywordRegex,
+    skip,
+    limit
+  );
+  if (searchWishes.likeUser.includes(uuid)) {
+    searchWishes.isLike = true;
+  } else {
+    searchWishes.isLike = false;
+  }
+  return searchWishes;
 };
 
 const findMyWishList = async (uuid, skip, limit) => {
   skip = (skip - 1) * limit;
-  return await wishDao.findMyWishList(uuid, skip, limit);
+  const [myWishes] = await wishDao.findMyWishList(uuid, skip, limit);
+  if (myWishes.likeUser.includes(uuid)) {
+    myWishes.isLike = true;
+  } else {
+    myWishes.isLike = false;
+  }
+  return myWishes;
 };
 
 const wishCountService = () => {
