@@ -30,9 +30,14 @@ const detailWishForMainController = async (req, res) => {
 };
 
 const findWishByKeyword = async (req, res) => {
-  const { keyword, skip, limit } = req.query;
+  const { keyword, skip, limit, uuid } = req.query;
 
-  const wishes = await wishService.findWishByKeyword(keyword, skip, limit);
+  const wishes = await wishService.findWishByKeyword(
+    keyword,
+    skip,
+    limit,
+    uuid
+  );
 
   res.status(200).json(wishes);
 };
