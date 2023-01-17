@@ -7,6 +7,9 @@ const likeService = async (likeData) => {
   if (like !== true && like !== false) {
     throw new ValidationError("like must be a Boolean type");
   }
+  if (!uuid) {
+    throw new BadRequestError("uuid required");
+  }
 
   const [validateLike] = await likeDao.validationLike(id, uuid);
 
