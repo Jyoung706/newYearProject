@@ -2,6 +2,9 @@ const express = require("express");
 const router = require("./routes");
 const cors = require("cors");
 const morgan = require("morgan");
+const cron = require("./batch/keywordBatch");
+
+cron.batchKeywordAnalyze();
 
 const createApp = () => {
   const app = express();
