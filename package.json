@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./src/server.js"
+    "start": "nodemon ./src/server.js",
+    "distribute": "npm i && pm2 start server.js --name newyearproject -i max"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
     "mongoose": "^6.8.3",
     "morgan": "^1.10.0",
     "node-cron": "^3.0.2",
+    "pm2": "^5.2.2",
     "request": "^2.88.2",
     "uuid": "^9.0.0"
   },
