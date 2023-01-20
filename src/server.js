@@ -7,7 +7,7 @@ const app = createApp();
 const PORT = process.env.PORT;
 
 //health check
-app.get('/', (req, res) => {
+app.get('/health', (req, res) => {
   res.status(200).json('health check');
 });
 
