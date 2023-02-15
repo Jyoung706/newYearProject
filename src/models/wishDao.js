@@ -1,7 +1,7 @@
-const { getCurrentDate } = require("../common/date");
-const Wish = require("../schema/wishes");
+const { getCurrentDate } = require('../common/date');
+const Wish = require('../schema/wishes');
 
-const findWishByUuid = async (uuid) => {
+const findWishByUuid = async uuid => {
   return await Wish.find({ uuid });
 };
 
@@ -25,6 +25,10 @@ const findWishListByTimeCount = async (pre_time, curr_time) => {
   }).count();
 };
 
+const findWishListCount = async () => {
+  return await Wish.find({}).count();
+};
+
 const findWishListByTime = async (pre_time, curr_time, sikp, limit) => {
   return await Wish.find(
     {
@@ -33,20 +37,21 @@ const findWishListByTime = async (pre_time, curr_time, sikp, limit) => {
         $lte: curr_time,
       },
     },
-    { _id: 0, comment: 1 }
+    { _id: 0, comment: 1 },
   )
     .skip(sikp)
     .limit(limit);
 };
 
-const getWishForMain = async () => {
-  return await Wish.aggregate([
-    { $sample: { size: 8 } },
-    { $project: { likes: 1 } },
-  ]);
+const findAllWishList = async () => {
+  return await Wish.find({});
 };
 
-const findWishById = async (id) => {
+const getWishForMain = async () => {
+  return await Wish.aggregate([{ $sample: { size: 8 } }, { $project: { likes: 1 } }]);
+};
+
+const findWishById = async id => {
   return await Wish.find({ _id: id });
 };
 
@@ -73,4 +78,6 @@ module.exports = {
   findWishByKeyword,
   findMyWishList,
   getAllWishCount,
+  findWishListCount,
+  findAllWishList,
 };
